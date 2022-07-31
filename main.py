@@ -20,7 +20,7 @@ def get_list(*lst):
         try:
             end=str.index(i,"/",begin)
         except:
-            end=-1
+            end=len(i)
         new_lst.append(i[begin:end])
     return new_lst
 
@@ -52,11 +52,12 @@ blocked=set()
 flag=False
 #find the blocked web-sites
 with open(get_path_of_hosts(),'r+') as file:
-    for i in file.read().split('\n'):
+    text=file.read().split('\n')
+    for i in text:
         if i[0:9] == '127.0.0.1':
             blocked=set(i[str.index(i,'\t'):].split('\t'))
             flag=True
-    if flag==False:
+    if flag==False or text[-1][0:9]!='127.0.0.1':
         file.write('\n127.0.0.1\t')
 
 add_sites("https://www.meuhedet.co.il/","https://www.hhh.co.il")
