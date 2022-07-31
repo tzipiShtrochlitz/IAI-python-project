@@ -3,12 +3,12 @@ import os
 import sys
 from sys import platform
 
+
 def get_path_of_hosts():
     if platform == "linux" or platform == "linux2":
         return "/etc/hosts"
     elif platform == "win32":
         return "C:\Windows\System32\drivers\etc\hosts"
-
 
 def split_name(full):
     try:
@@ -27,7 +27,7 @@ def is_admin():
     except:
         return False
 
-def add_sites(*lst):
+def block_sites(*lst):
     sites = []
     for i in lst:
         sites.append(split_name(i))
@@ -75,5 +75,5 @@ with open(get_path_of_hosts(),'r+') as file:
     if flag==False or text[-1][0:9]!='127.0.0.1':
         file.write('\n127.0.0.1\t')
 
-add_sites("https://www.meuhedet.co.il/","https://www.hhh.co.il")
+block_sites("https://www.meuhedet.co.il/","https://www.hhh.co.il")
 unblock("https://www.meuhedet.co.il/")
