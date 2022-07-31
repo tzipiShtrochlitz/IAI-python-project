@@ -55,7 +55,7 @@ with open(get_path_of_hosts(),'r+') as file:
     text=file.read().split('\n')
     for i in text:
         if i[0:9] == '127.0.0.1':
-            blocked=set(i[str.index(i,'\t'):].split('\t'))
+            blocked=blocked.union(set(i[str.index(i,'\t'):].split('\t')))
             flag=True
     if flag==False or text[-1][0:9]!='127.0.0.1':
         file.write('\n127.0.0.1\t')
