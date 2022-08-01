@@ -1,7 +1,17 @@
+
+# !/usr/bin/python
 import ctypes
 import os
 import sys
 from sys import platform
+import argparse
+
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--block','-b', default=[],help="enter sites to block")
+parser.add_argument('--unblock','-ub', default=[],help="enter sites to unblock")
+args = parser.parse_args()
 
 
 def get_path_of_hosts():
@@ -74,6 +84,8 @@ with open(get_path_of_hosts(),'r+') as file:
             flag=True
     if flag==False or text[-1][0:9]!='127.0.0.1':
         file.write('\n127.0.0.1\t')
-
-block_sites(["https://www.meuhedet.co.il/","https://www.hhh.co.il"])
-unblock("https://www.meuhedet.co.il/")
+if len(args.block)>0:
+    block_sites(args.block)
+if len(args.unblock) > 0:
+    for i in args.unblock:
+        unblock(i)
