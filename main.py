@@ -63,6 +63,7 @@ flag=False
 try:
     if (not is_admin()):
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+        exit(0)
 except:
         print("was an error")
 with open(get_path_of_hosts(),'r+') as file:
