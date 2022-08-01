@@ -41,6 +41,7 @@ def block_sites(lst):
         blocked.add(i)
         print(i, " is blocked")
 def unblock(sites):
+    flag=False
     for name in sites:
         new_text=""
         name=split_name(name)
@@ -50,11 +51,13 @@ def unblock(sites):
             if i[0:9]=='127.0.0.1':
                 if name in i.split('\t'):
                     i=i.replace(name+'\t','')
+                    flag=True
             if len(i)>1:
                 new_text=new_text+'\n'+i
         with open(get_path_of_hosts(),'w') as file:
             file.write(new_text)
-        print(name," is unblocked")
+        if flag is True:
+            print("{} is unblocked".format(name))
 #get the blocked web sites
 blocked=set()
 #if there are blocked web-sites already
