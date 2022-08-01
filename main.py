@@ -9,8 +9,8 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--block','-b', default=[],help="enter sites to block")
-parser.add_argument('--unblock','-ub', default=[],help="enter sites to unblock")
+parser.add_argument('--block','-b', default=[],help="enter sites to block",nargs='*')
+parser.add_argument('--unblock','-ub', default=[],help="enter sites to unblock",nargs='*')
 args = parser.parse_args()
 
 
@@ -37,7 +37,7 @@ def is_admin():
     except:
         return False
 
-def block_sites(lst):
+def block_sites(*lst):
     sites = []
     for i in lst:
         sites.append(split_name(i))
@@ -55,20 +55,21 @@ def block_sites(lst):
     except:
         print("was an error")
 
-def unblock(name):
-    new_text=""
-    name=split_name(name)
-    with open(get_path_of_hosts(), 'r') as file:
-        text = file.read().split('\n')
-    for i in text:
-        if i[0:9]=='127.0.0.1':
-            if name in i.split('\t'):
-                i=i.replace(name+'\t','')
-        if len(i)>1:
-            new_text=new_text+'\n'+i
-    with open(get_path_of_hosts(),'w') as file:
-        file.write(new_text)
-    print(name," is unblocked")
+def unblock(*sites):
+    for name in sites:
+        new_text=""
+        name=split_name(name)
+        with open(get_path_of_hosts(), 'r') as file:
+            text = file.read().split('\n')
+        for i in text:
+            if i[0:9]=='127.0.0.1':
+                if name in i.split('\t'):
+                    i=i.replace(name+'\t','')
+            if len(i)>1:
+                new_text=new_text+'\n'+i
+        with open(get_path_of_hosts(),'w') as file:
+            file.write(new_text)
+        print(name," is unblocked")
 
 
 #get the blocked web sites
@@ -87,5 +88,4 @@ with open(get_path_of_hosts(),'r+') as file:
 if len(args.block)>0:
     block_sites(args.block)
 if len(args.unblock) > 0:
-    for i in args.unblock:
         unblock(i)
