@@ -7,7 +7,7 @@ import argparse
 
 # get the path of the 'hosts' file
 def get_path_of_hosts():
-    if platform == "linux" or platform == "linux2" or platform == "darwin":
+    if platform == "linux" or platform == "linux2" or platform == "MacOs":
         return "/etc/hosts"
     elif platform == "win32":
         return "C:\Windows\System32\drivers\etc\hosts"
