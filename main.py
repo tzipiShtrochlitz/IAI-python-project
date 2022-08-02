@@ -73,9 +73,6 @@ def unblock(sites):
 def get_the_blockes():
     blocked = set()
     # find the blocked web-sites
-    if (not is_admin()):
-        # ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-        exit('you are not admin')
     with open(get_path_of_hosts(), 'r+') as file:
         text = file.read().split('\n')
         for i in text:
@@ -92,6 +89,8 @@ parser.add_argument('--block', '-b', default=[], help="enter sites to block", na
 parser.add_argument('--unblock', '-ub', default=[], help="enter sites to unblock", nargs='*')
 args = parser.parse_args()
 
+if (not is_admin()):
+    exit('you are not admin')
 # the blocked sites
 blocked = get_the_blockes()
 
